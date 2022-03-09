@@ -14,17 +14,22 @@ connectDB();
 app.use(express.json()); //api can accept raw json form
 app.use(express.urlencoded({ extended: false })); //api can accept urlEncoded form
 
-app.get('/', (req, res) => {
-  res.json({ message: 'welcome' });
-});
-
 // Routes
 app.use('/api/users', require('./routes/userRoutes'));
 app.use('/api/tickets', require('./routes/ticketRoutes'));
 
 //Serve frontend
 if (process.env.NODE_ENV === 'production') {
+  //set frontend build folder as static
   app.use(express.static(path.join(__dirname, '../frontend/build')));
+
+  app.get('*', (req, res) =>
+    res.sendFile(__dirname, '../', 'frontend', 'build', 'index.html')
+  );
+} else {
+  app.get('/', (req, res) => {
+    res.json({ message: 'welcome' });
+  });
 }
 
 //ErrorHandler
