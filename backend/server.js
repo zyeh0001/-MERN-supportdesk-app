@@ -36,6 +36,4 @@ if (process.env.NODE_ENV === 'production') {
 //ErrorHandler
 app.use(errorHandler);
 
-app.listen(process.env.PORT || 8000, () =>
-  console.log('SERVER STARTED ON PORT' + PORT)
-);
+app.listen(PORT, () => console.log('SERVER STARTED ON PORT' + PORT));
